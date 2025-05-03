@@ -60,7 +60,8 @@ def generate_bar_chart(teacher_df, aspect_categories):
         xaxis_title="Aspect Category",
         yaxis_title="Number of Responses",
         xaxis=dict(tickfont=dict(size=14)),  # <-- adjust font size here    
-        hoverlabel=dict(font_size=12, font_family="Arial", align='left')
+        hoverlabel=dict(font_size=12, font_family="Arial", align='left'), 
+        dragmode = False
     )
     st.plotly_chart(fig, use_container_width=True)    
     bar_graph_path = os.path.join(tempfile.gettempdir(), "bar_graph.png")
