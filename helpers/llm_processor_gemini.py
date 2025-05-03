@@ -87,7 +87,7 @@ def process_teacher_feedback_with_llm(df, selected_teacher, semester_name):
         if col not in teacher_df.columns:
             teacher_df[col] = ""
 
-    indices_to_process = teacher_df[teacher_df['Target'].str.contains('Teacher', case=False, na=False)].index
+    indices_to_process = teacher_df.index
 
     # Change the model name to a Gemini model available via API
     model_name = 'gemini-1.5-flash' # Recommended balance of cost/performance for this task
