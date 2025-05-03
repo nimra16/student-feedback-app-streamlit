@@ -74,8 +74,9 @@ def generate_wordcloud(teacher_df, aspect_categories):
     custom_stopwords = set(STOPWORDS).difference(negation_words)
 
     stopwords = custom_stopwords.union({
-        "teacher", "ma'am", "sir", "miss", "mr", "mam", "mrs", "teaches", "student", "teach", 
-        "classroom", "good", "us", "mentioned", "course", "subject", "class", "students"
+        "teacher", "ma'am", "sir", "miss", "mr", "mam", "mrs", "teaches", "student", "teach",  
+        "classroom", "good", "us", "mentioned", "course", "subject", "class", "students",
+        "teaching", "semester", "faculty", "professor", "experience", "knowledge", "behavior", "pedagogy"
     })        
     wordcloud_images = []
 

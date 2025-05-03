@@ -49,7 +49,7 @@ def ask_ollama_api(input_content, system_prompt, model_name, ngrok_url):
 
 
 # Function to process teacher feedback dataframe with LLM
-def process_teacher_feedback_with_llm(df, selected_teacher, semester_name):
+def process_teacher_feedback_with_llm(teacher_df, selected_teacher, semester_name):
     system_prompt = """
     You are an expert in Aspect-Based Sentiment Analysis (ABSA). Your task is to analyze teacher reviews and extract aspect-specific information based on the following predefined aspect categories:
 
@@ -78,7 +78,7 @@ def process_teacher_feedback_with_llm(df, selected_teacher, semester_name):
     term_columns = [f"{aspect}_terms" for aspect in aspects]
     polarity_columns = [f"{aspect}_polarity" for aspect in aspects]
 
-    teacher_df = df[df['FacultyName'] == selected_teacher].copy()
+    # teacher_df = df[df['FacultyName'] == selected_teacher].copy()
 
     # Add empty columns if they don't exist
     for col in term_columns + polarity_columns:
@@ -98,8 +98,8 @@ def process_teacher_feedback_with_llm(df, selected_teacher, semester_name):
             pd.isna(feedback) or 
             feedback.strip() == "" or 
             re.fullmatch(r"[.\s]*", feedback) or 
-            len(feedback.strip().split()) <= 1 or 
-            feedback.strip().lower().replace(".", "").replace(" ", "") in {"na", "n/a"}
+            len(feedback.strip().split()) < 2 or 
+            feedback.strip().lower().replace(".", "").replace(" ", "") in {"na", "n/a", "nocomments"}
         ):
             continue
         
