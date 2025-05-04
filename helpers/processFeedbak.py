@@ -71,11 +71,11 @@ def process_and_display_feedback(df, selected_teacher, semester_name,):
 
         if selected_class != 'All':
             teacher_df = teacher_df[(teacher_df['Course'] == selected_course) & (teacher_df['Class'].astype(str) == selected_class)]
-            st.markdown(f"### Feedback Report for {selected_teacher} | **Course: {selected_course} | Class: {selected_class}**")
+            st.markdown(f"### Feedback Report for {selected_teacher} | **Course: {selected_course} | Class: {selected_class}** | **Semester: {semester_name}**")
         else:
             teacher_df = teacher_df[teacher_df['Course'] == selected_course]
-            st.markdown(f"### Feedback Report for {selected_teacher} | **Course: {selected_course}**")
+            st.markdown(f"### Feedback Report for {selected_teacher} | **Course: {selected_course}** | **Semester: {semester_name}**")
     else:
-        st.markdown(f"### Overall Feedback Report for {selected_teacher}")
+        st.markdown(f"### Feedback Report for {selected_teacher} | **Semester: {semester_name}**")  
 
     generate_absa_report(teacher_df, selected_teacher, selected_course, selected_class, selected_aspects, semester_name)

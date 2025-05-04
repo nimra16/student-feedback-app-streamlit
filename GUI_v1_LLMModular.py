@@ -6,10 +6,6 @@ from helpers.pdf_text_extractor import extract_feedback_from_pdf
 from helpers.processFeedbak import process_and_display_feedback
 warnings.filterwarnings("ignore")
 
-# =========================================
-# Utility Functions
-# =========================================
-
 
 # =========================================
 # Streamlit UI Starts
@@ -52,17 +48,17 @@ elif input_mode == "Individual Teacher (PDF)":
     if pdf_file:
         with st.spinner("Extracting feedback from PDF..."):
             df = extract_feedback_from_pdf(pdf_file)
-
+            df.to_csv("temp.csv", index=False)  # Save the extracted data for debugging
         if not df.empty:
             teacher_dfRaw = df[df['Target'].str.contains('Teacher', case=False, na=False)]
             selected_teacher = teacher_dfRaw['FacultyName'].iloc[0]                    
-            selected_course = teacher_dfRaw['Course'].iloc[0]
-            selected_class = teacher_dfRaw['Class'].iloc[0]
+            # selected_course = teacher_dfRaw['Course'].iloc[0]
+            # selected_class = teacher_dfRaw['Class'].iloc[0]
             semester_name = teacher_dfRaw['Semester'].iloc[0] if 'Semester' in teacher_dfRaw.columns else "Individual Teacher"
 
             st.sidebar.markdown(f"**Teacher:** {selected_teacher}")
-            st.sidebar.markdown(f"**Course:** {selected_course}")
-            st.sidebar.markdown(f"**Class:** {selected_class}")
-            st.sidebar.markdown(f"**Semester:** {semester_name}")
-
+            # st.sidebar.markdown(f"**Course:** {selected_course}")
+            # st.sidebar.markdown(f"**Class:** {selected_class}")
+            # st.sidebar.markdown(f"**Semester:** {semester_name}")
+            
             process_and_display_feedback(teacher_dfRaw, selected_teacher, semester_name)

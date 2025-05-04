@@ -33,7 +33,7 @@ def generate_bar_chart(teacher_df, aspect_categories):
 
     sentiment_df = pd.DataFrame(sentiment_chart_data)
     sentiment_df['CommentsStr'] = sentiment_df['Comments'].apply(
-        lambda clist: "<br>".join(wrap_text(c.replace("\n", " "), 150) for c in clist)
+        lambda clist: "<br>".join(wrap_text(c.replace("\n", " "), 140) for c in clist)
     )
     # st.table(sentiment_df[['Aspect', 'Sentiment', 'Count', 'Percentage']].style.format({'Percentage': '{:.1f}%'}))
     fig = px.bar(
