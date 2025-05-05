@@ -14,7 +14,8 @@ def extract_feedback_from_pdf(pdf_file):
     for i in range(len(lines) - 2):
         if not lines[i].strip():
             continue
-        elif "comments report" in lines[i].lower() and "term:" in lines[i+1].lower():
+        elif "class:" in lines[i].lower() and "term:" in lines[i].lower():
+            # print(lines[i] + " " + lines[i+1])
             blocks.append(i)
 
     # Step 2: Process each block
@@ -22,8 +23,8 @@ def extract_feedback_from_pdf(pdf_file):
         i = blocks[b]
         next_i = blocks[b + 1] if b + 1 < len(blocks) else len(lines)
 
-        course_name = lines[i+2].strip()
-        class_line = lines[i+1].strip().lower()
+        course_name = lines[i+1].strip()
+        class_line = lines[i].strip().lower()
         
         # Extract term and class
         class_name = None
