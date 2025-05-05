@@ -88,11 +88,13 @@ def generate_wordcloud(teacher_df, aspect_categories):
         # terms_data = aspect_df["Comments"].str.lower().dropna()
         terms_data = aspect_df[f"{aspect}_terms"]
         if not terms_data.empty:
-            combined_terms = " ".join(terms_data)
-            # print("Length of combined terms for Wordcloud for Aspect:", aspect, "is ", "Terms:", combined_terms, len(combined_terms))
+            combined_terms = " ".join(terms_data).lower().strip()
             
-            wordcloud = WordCloud(width=800, height=400, background_color='white', stopwords=stopwords).generate(combined_terms)
-            wordcloud_images.append((aspect, wordcloud))
+            # Check if there's at least one word after removing stopwords
+            filtered_words = [word for word in combined_terms.split() if word not in stopwords]           
+            if filtered_words:  # Proceed only if there are valid words
+                wordcloud = WordCloud(width=800, height=400, background_color='white', stopwords=stopwords).generate(" ".join(filtered_words))
+                wordcloud_images.append((aspect, wordcloud))
 
     rows = (len(wordcloud_images) + 2) // 3
     for i in range(rows):
