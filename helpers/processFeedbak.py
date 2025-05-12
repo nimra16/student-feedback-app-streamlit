@@ -48,17 +48,18 @@ def generate_absa_report(teacher_df, selected_teacher, selected_course, selected
     with open(pdf_path, "rb") as f:
         st.download_button("Download Full Feedback Report (PDF)", f, os.path.basename(pdf_path), mime="application/pdf")
 
-def process_and_display_feedback(df, selected_teacher, semester_name,):
+def process_and_display_feedback(df, selected_teacher, semester_name, ):
+    aspect_categories = ["Teaching Pedagogy", "Knowledge", "Fair in Assessment", "Experience", "Behavior", "General"]
+
     processed_file_path = f"Datasets/{semester_name}/{selected_teacher}_processed_feedback.csv"
     if os.path.exists(processed_file_path):
         teacher_df = pd.read_csv(processed_file_path)
     else:
         st.info("Processing feedback with LLM... Please wait ⌛")
         teacher_dfRaw = df[df['FacultyName'] == selected_teacher].copy()
-        teacher_df = process_teacher_feedback_with_llm(teacher_dfRaw, selected_teacher, semester_name)
+        teacher_df = process_teacher_feedback_with_llm(teacher_dfRaw, selected_teacher, semester_name, aspect_categories)
         st.success("Processing complete ✅")
 
-    aspect_categories = ["Teaching Pedagogy", "Knowledge", "Fair in Assessment", "Experience", "Behavior"]
 
     selected_aspects = st.sidebar.multiselect("Select Aspects to Include in Report", options=aspect_categories, default=aspect_categories)
 

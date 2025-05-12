@@ -49,32 +49,42 @@ def ask_ollama_api(input_content, system_prompt, model_name, ngrok_url):
 
 
 # Function to process teacher feedback dataframe with LLM
-def process_teacher_feedback_with_llm(teacher_df, selected_teacher, semester_name):
+def process_teacher_feedback_with_llm(teacher_df, selected_teacher, semester_name, aspects):
     system_prompt = """
-    You are an expert in Aspect-Based Sentiment Analysis (ABSA). Your task is to analyze teacher reviews and extract aspect-specific information based on the following predefined aspect categories:
+    You are an expert in Aspect-Based Sentiment Analysis (ABSA). Your task is to analyze teacher reviews and extract aspect-specific information for the following predefined categories:
 
     - Teaching Pedagogy  
     - Knowledge  
     - Fair in Assessment  
     - Experience  
     - Behavior  
+    - General 
 
-    For each aspect category that is **explicitly or implicitly mentioned** in the review:
-    1. Identify and extract the **aspect term(s) or phrase(s)** used in the review that are related to the aspect category.These extracted terms should be the substrings from the review. 
-    2. if multiple terms are found, return them as a list. If no terms are found, return "None" for aspect terms and polarity.
-    3. Determine the **sentiment polarity** expressed toward that aspect category. Choose one of: {Positive, Negative, Neutral}.
-    4. Do not include any explanation or additional information in your response.
-    5. Return the output in a structured JSON format as follows:
+    Instructions:
+    1. For each aspect category **explicitly or implicitly mentioned** in the review:
+    - Extract the **exact aspect term(s) or phrase(s)** from the review text. Only include substrings that appear verbatim in the review.
+    - If multiple terms/phrases are found, return them as a list.
+    - If no relevant phrase is found for a category, return `"Aspect Terms": None` and `"Polarity": None`.
+
+    2. Determine the **sentiment polarity** toward each mentioned aspect: one of `{Positive, Negative, Neutral}`.
+
+    3. Return the output in the following structured JSON format **without any explanation or commentary**:
+
     ```json
     {
-    "Aspect Category": {
-        "Aspect Terms": "..." OR [...],
+    "Teaching Pedagogy": {
+        "Aspect Terms": [...], 
+        "Polarity": "..."
+    },
+    "Knowledge": {
+        "Aspect Terms": [...], 
         "Polarity": "..."
     },
     ...
     }
+
     """
-    aspects = ["Teaching Pedagogy", "Knowledge", "Fair in Assessment", "Experience", "Behavior"]
+    # aspects = ["Teaching Pedagogy", "Knowledge", "Fair in Assessment", "Experience", "Behavior"]
     term_columns = [f"{aspect}_terms" for aspect in aspects]
     polarity_columns = [f"{aspect}_polarity" for aspect in aspects]
 
@@ -98,8 +108,8 @@ def process_teacher_feedback_with_llm(teacher_df, selected_teacher, semester_nam
             pd.isna(feedback) or 
             feedback.strip() == "" or 
             re.fullmatch(r"[.\s]*", feedback) or 
-            len(feedback.strip().split()) < 2 or 
-            feedback.strip().lower().replace(".", "").replace(" ", "") in {"na", "n/a", "nocomments"}
+            len(feedback.strip()) < 8 or 
+            feedback.strip().lower().replace(".", "").replace(" ", "") in {"na", "n/a", "nocomments", "nocomment", "noany", "none"}
         ):
             continue
         
