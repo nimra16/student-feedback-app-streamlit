@@ -24,7 +24,7 @@ def parse_json_safe(response_text):
         json_end = response_text.rfind('}') + 1
         json_substring = response_text[json_start:json_end]
 
-        print(f"Extracted JSON substring: {json_substring}")
+        # print(f"Extracted JSON substring: {json_substring}")
         return json.loads(json_substring)
 
     except Exception as e:

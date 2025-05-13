@@ -58,7 +58,6 @@ def process_teacher_feedback_with_llm(teacher_df, selected_teacher, semester_nam
     - Fair in Assessment  
     - Experience  
     - Behavior  
-    - General 
 
     Instructions:
     1. For each aspect category **explicitly or implicitly mentioned** in the review:
