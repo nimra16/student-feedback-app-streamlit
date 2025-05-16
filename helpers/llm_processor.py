@@ -96,7 +96,7 @@ def process_teacher_feedback_with_llm(teacher_df, selected_teacher, semester_nam
 
     indices_to_process = teacher_df.index
 
-    model_name = 'mistral'  # The model name to use
+    model_name = 'qwen2.5:3b'  # The model name to use
     
     progress_bar = st.progress(0)
     total = len(indices_to_process)
