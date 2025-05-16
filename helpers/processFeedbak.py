@@ -49,7 +49,7 @@ def generate_absa_report(teacher_df, selected_teacher, selected_course, selected
         st.download_button("Download Full Feedback Report (PDF)", f, os.path.basename(pdf_path), mime="application/pdf")
 
 def process_and_display_feedback(df, selected_teacher, semester_name, ):
-    aspect_categories = ["Teaching Pedagogy", "Knowledge", "Fair in Assessment", "Experience", "Behavior"]
+    aspect_categories = ["Teaching Skills", "Knowledge", "Fair in Assessment", "Experience", "Behavior"]
 
     processed_file_path = f"Datasets/{semester_name}/{selected_teacher}_processed_feedback.csv"
     if os.path.exists(processed_file_path):

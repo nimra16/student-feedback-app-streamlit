@@ -24,7 +24,7 @@ st.markdown("<h1 class='center-title'>Teacher Feedback Analysis Dashboard</h1>",
 
 columns = ['FacultyName', 'Course', 'Comments', 'Target', 'Class']
 columns_str = ", ".join(f"**{col}**" for col in columns)
-aspect_categories = ["Teaching Pedagogy", "Knowledge", "Fair in Assessment", "Experience", "Behavior"]
+aspect_categories = ["Teaching Skills", "Knowledge", "Fair in Assessment", "Experience", "Behavior"]
 
 input_mode = st.radio("Select Input Mode", ["Multiple Teachers (CSV/XLSX)", "Individual Teacher (PDF)"])
 

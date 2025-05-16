@@ -53,7 +53,7 @@ def process_teacher_feedback_with_llm(teacher_df, selected_teacher, semester_nam
     system_prompt = """
     You are an expert in Aspect-Based Sentiment Analysis (ABSA). Your task is to analyze teacher reviews and extract aspect-specific information for the following predefined categories:
 
-    - Teaching Pedagogy  
+    - Teaching Stills  
     - Knowledge  
     - Fair in Assessment  
     - Experience  
@@ -71,7 +71,7 @@ def process_teacher_feedback_with_llm(teacher_df, selected_teacher, semester_nam
 
     ```json
     {
-    "Teaching Pedagogy": {
+    "Teaching Skills": {
         "Aspect Terms": [...], 
         "Polarity": "..."
     },
